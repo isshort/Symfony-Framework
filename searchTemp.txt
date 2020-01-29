@@ -1,0 +1,102 @@
+    private $searchArray=array();
+    function  setSearchArray($array){
+        $this->searchArray=$array;
+    }
+    function getSearchArray(){
+        return $this->searchArray;
+    }
+
+
+    /**
+     * @Route("/student/search", name="searchsomestudentform")
+     */
+    public function searchCustomer(StudentRepository $repository,Request $request)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Student::class);
+        $em = $this->getDoctrine()->getManager();
+
+        $id=$request->request->get('id');
+        $name=$request->request->get('name');
+        $last_name=$request->request->get('last_name');
+        $year=$request->request->get('year');
+        $RAW_QUERY=$this->GenerateSQL($id,$name,$last_name,$year);
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        foreach ($this->getSearchArray() as $key=>$value){
+            $statement->bindValue($key,$value);
+        }
+
+        //$statement->bindValue('name1', "wahidi");
+       // $statement->bindValue('name2',"Namatullah");
+
+        $statement->execute();
+
+        $students = $statement->fetchAll();
+        //var_export($students);
+
+        $items = array();
+        foreach ($students as $doc){
+            $items[] = $doc;
+        }
+        if (!$students) {
+            throw $this->createNotFoundException(
+                'No customer found for id '
+            );
+        }
+        return $this->render('student/showstudent.html.twig', ["students" => $items]);
+    }
+    public function GenerateSQL($id,$name,$last_name,$year){
+        $sql = "Select * From student ";
+        $arr=array();
+        if (($name=="") && ($last_name=="") && ($id==0) && ($year==0) ) {
+            $sql = "select  * from student";
+            $this->setStateArray(0);
+        }else{
+         
+            $sql=$sql." where ";
+            $tail="";
+            if($name!=""){
+                $sql=$sql." name=:name ";
+                $arr['name']=$name;
+                $tail="and";
+            }
+            if($last_name!=""){
+                if($tail!=""){
+                    $sql=$sql." and last_name=:last_name";
+                }else{
+                    $sql=$sql." last_name=:last_name";
+                    $tail="and";
+                }
+                $arr['last_name']=$last_name;
+            }
+            if($year!=0){
+                if($tail!=""){
+                    $sql=$sql." and year=:year";
+                }else{
+                    $sql=$sql." year=:year";
+                    $tail="and";
+                }
+                $arr['year']=$year;
+            }
+            if($id!=0){
+                if($tail!=""){
+                    $sql=$sql." and id=:id";
+                }else{
+                    $sql=$sql." id=:id";
+                    $tail="and";
+                }
+                $arr['id']=$id;
+            }
+
+        }
+        $this->setSearchArray($arr);
+        return $sql;
+
+    }
+    /**
+     * @Route("/student/searchsomestudent", name="searchsomestudent")
+     */
+    public function searchSomWorker(){
+        return $this->render('student/searchsomestudent.html.twig',[]);
+    }
+

@@ -1,0 +1,22 @@
+{% extends 'index.html.twig' %}
+
+{% block body %}
+    <div class="post-preview">
+        <h2 class="post-title">
+            Enter new customer info
+        </h2>
+        <form method="POST" action="{{path('addNewstudent')}}">
+
+                <input class="form-control" type="text" name="name" placeholder="Enter Name">&nbsp&nbsp&nbsp<br>
+                <input type="text" class="form-control" name="price" placeholder="Enter  Pirce">&nbsp&nbsp&nbsp<br>
+                <input type="text" class="form-control" name="company" placeholder="Enter Company"><br>
+                <input type="text" class="form-control" name="amount" placeholder="Enter Amount"><br>
+                <input type="submit" name="Submit" value="Insert">
+
+
+        </form>
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,73 @@
+.my-custom-scrollbar {
+position: relative;
+height: 400px;
+overflow: auto;
+border: 23px;
+background-color:#FFE4C4;
+}
+
+.table-wrapper-scroll-y {
+display: block;
+}
+
+
+tr {
+width: 100%;
+display: inline-table;
+table-layout: fixed;
+}
+
+table{
+ height:600px;              // <-- Select the height of the table
+ display: -moz-groupbox;    // Firefox Bad Effect
+}
+tbody{
+  overflow-y: scroll;      
+  height: 300px;            //  <-- Select the height of the body
+  width: 100%;
+  position: absolute;
+}
+
+/* button space*/
+.btn-space {
+
+	color: white;
+	background-color: green;
+    margin-right: 55px;
+}
+
+
+/*That is for search button*/
+.btn-space1{
+	margin-right: 25px;
+}
+
+/*that is for right row */
+.right_row{
+	 
+	 border: 1px solid  #696969;
+}
+
+.left_row{
+	border: 1px solid  #696969;
+}
+
+/*There we can space between catagory option and tag*/
+.option_space{
+	margin-right: 15px;
+}
+.control-group{
+	padding-left: 5px;
+	padding-top: 5px;
+	 
+}
+
+
+/*There we can set the h1 of about page*/
+.about{
+	padding-left: 500px;
+	background-color: red;
+}
+.Contact{
+	background-color: red;
+}

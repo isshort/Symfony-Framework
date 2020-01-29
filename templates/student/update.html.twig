@@ -1,0 +1,18 @@
+{% extends 'index.html.twig' %}
+{% block body %}
+
+
+    <form method="POST" action="{{ path('updatestudent', {'id': student.id}) }}">
+
+            <input class="form-control" type="text" name="name" value="{{ student.name }}">&nbsp&nbsp&nbsp<br>
+            <input type="text" class="form-control" name="price" value="{{ student.price }}">&nbsp&nbsp&nbsp<br>
+            <input type="text" class="form-control" name="company" value="{{ student.company }}"> <br>
+            <input type="text" class="form-control" name="amount" value="{{ student.amount }}"> <br>
+
+        <input type="submit" name="Submit" value="Update">
+
+
+    </form>
+
+
+{% endblock %}
